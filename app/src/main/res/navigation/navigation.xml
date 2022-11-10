@@ -8,5 +8,13 @@
         android:id="@+id/challengesFragmentSTART"
         android:name="hu.inf.unideb.dailychallenges.screens.challenges.ChallengesFragment"
         android:label="fragment_challenges"
-        tools:layout="@layout/fragment_challenges" />
+        tools:layout="@layout/fragment_challenges" >
+        <action
+            android:id="@+id/action_challengesFragmentSTART_to_newChallengeFragment2"
+            app:destination="@id/newChallengeFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/newChallengeFragment2"
+        android:name="hu.inf.unideb.dailychallenges.screens.newchallenge.NewChallengeFragment"
+        android:label="NewChallengeFragment" />
 </navigation>
