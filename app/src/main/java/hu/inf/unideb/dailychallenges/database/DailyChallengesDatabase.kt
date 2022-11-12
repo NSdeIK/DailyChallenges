@@ -5,6 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import hu.inf.unideb.dailychallenges.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+
 
 @Database(entities = [DailyChallenges::class,DailyChallengesCategories::class], version = 1, exportSchema = false)
 abstract class DailyChallengesDatabase : RoomDatabase() {
@@ -27,6 +33,7 @@ abstract class DailyChallengesDatabase : RoomDatabase() {
                     )
                         .fallbackToDestructiveMigration()
                         .addCallback(CategoriesCallback())
+                        .allowMainThreadQueries()
                         .build()
 
                     INSTANCE = instance
@@ -37,20 +44,40 @@ abstract class DailyChallengesDatabase : RoomDatabase() {
     }
 
     private class CategoriesCallback : RoomDatabase.Callback(){
+
+        private val applicationScope = CoroutineScope(SupervisorJob())
+
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
 
-            INSTANCE?.let { db ->
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(0,"Education"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(1,"Recreational"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(2,"Music"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(3,"Diy"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(4,"Social"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(5,"Cooking"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(6,"Relaxation"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(7,"Charity"))
-                    db.dailyChallengesDAO.category_insert(DailyChallengesCategories(8,"Busywork"))
+            applicationScope.launch(Dispatchers.IO){
+                INSTANCE?.let{ database ->
+                    category_insert_to_database(database.dailyChallengesDAO)
                 }
+            }
+        }
+
+        override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+            super.onDestructiveMigration(db)
+
+            applicationScope.launch(Dispatchers.IO){
+                INSTANCE?.let{ database ->
+                    category_insert_to_database(database.dailyChallengesDAO)
+                }
+            }
         }
     }
 }
+
+private fun category_insert_to_database(dailyChallengesDAO: DailyChallengesDAO){
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(1,"Recreational",R.drawable.ic_recreational))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(2,"Education",R.drawable.ic_education))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(3,"Music",R.drawable.ic_music))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(4,"Diy",R.drawable.ic_diy))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(5,"Social",R.drawable.ic_social))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(6,"Cooking",R.drawable.ic_cooking))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(7,"Relaxation",R.drawable.ic_relaxation))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(8,"Charity",R.drawable.ic_charity))
+    dailyChallengesDAO.category_insert(DailyChallengesCategories(9,"Busywork",R.drawable.ic_busywork))
+}
+

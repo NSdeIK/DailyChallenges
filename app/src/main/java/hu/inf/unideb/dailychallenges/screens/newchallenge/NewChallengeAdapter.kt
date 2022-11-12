@@ -1,50 +1,63 @@
 package hu.inf.unideb.dailychallenges.screens.newchallenge
 
-import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import hu.inf.unideb.dailychallenges.R
+import hu.inf.unideb.dailychallenges.database.DailyChallengesCategories
+import hu.inf.unideb.dailychallenges.databinding.NewchallengeListItemBinding
 
+class NewChallengeAdapter :
+    ListAdapter<DailyChallengesCategories, NewChallengeAdapter.ViewHolder>(NewChallengeDiffCallback()) {
 
-class NewChallengeAdapter(
-    newChallengeModelArrayList: ArrayList<NewChallengeModel>
-) :
-    RecyclerView.Adapter<NewChallengeAdapter.ViewHolder>() {
-
-    private val newChallengeModelArrayList: ArrayList<NewChallengeModel>
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): NewChallengeAdapter.ViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.newchallenge_list_item, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.i("DailyChallenges","NewChallengeAdapter - onCreateViewHolder")
+        return ViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: NewChallengeAdapter.ViewHolder, position: Int) {
-        val model: NewChallengeModel = newChallengeModelArrayList[position]
-        holder.newChallengeType.text = model.getChallenge_type()
-        holder.newChallengeImage.setImageResource(model.getChallenge_image())
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.i("DailyChallenges","NewChallengeAdapter - onBindViewHolder")
+        val item = getItem(position)
+        holder.bind(item)
     }
 
-    override fun getItemCount(): Int {
-        return newChallengeModelArrayList.size
-    }
+    class ViewHolder private constructor(private val bindingList: NewchallengeListItemBinding) : RecyclerView.ViewHolder(bindingList.root)
+    {
+        fun bind(item: DailyChallengesCategories)
+        {
+            Log.i("DailyChallenges","NewChallengeAdapter - ViewHolder - bind()")
+            bindingList.newchallengeItemText.text = item.categoryName
+            bindingList.newchallengeItemImage.setImageResource(item.categoryImage)
+        }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val newChallengeType : TextView
-        val newChallengeImage : ImageView
-        init {
-            newChallengeType = itemView.findViewById(R.id.newchallenge_item_text)
-            newChallengeImage = itemView.findViewById(R.id.newchallenge_item_image)
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                Log.i("DailyChallenges","NewChallengeAdapter - ViewHolder - from()")
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = NewchallengeListItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
         }
     }
 
-    init {
-        this.newChallengeModelArrayList = newChallengeModelArrayList
+}
+
+class NewChallengeDiffCallback : DiffUtil.ItemCallback<DailyChallengesCategories>(){
+    override fun areItemsTheSame(
+        oldItem: DailyChallengesCategories,
+        newItem: DailyChallengesCategories
+    ): Boolean {
+        Log.i("DailyChallenges","NewChallengeAdapter - DiffCallback - areItemsTheSame()")
+        return oldItem.categoryID == newItem.categoryID
+    }
+
+    override fun areContentsTheSame(
+        oldItem: DailyChallengesCategories,
+        newItem: DailyChallengesCategories
+    ): Boolean {
+        Log.i("DailyChallenges","NewChallengeAdapter - DiffCallback - areContentsTheSame()")
+        return oldItem == newItem
     }
 }

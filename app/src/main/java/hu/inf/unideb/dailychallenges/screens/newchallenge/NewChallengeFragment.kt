@@ -1,14 +1,16 @@
 package hu.inf.unideb.dailychallenges.screens.newchallenge
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import hu.inf.unideb.dailychallenges.R
+import hu.inf.unideb.dailychallenges.database.DailyChallengesDatabase
 import hu.inf.unideb.dailychallenges.databinding.FragmentNewchallengeBinding
 
 class NewChallengeFragment : Fragment() {
@@ -17,28 +19,29 @@ class NewChallengeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Log.i("DailyChallenges","NewChallengeFragment - onCreateView()")
         val binding: FragmentNewchallengeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_newchallenge, container, false)
 
-        val newChallengeList: ArrayList<NewChallengeModel> = ArrayList<NewChallengeModel>()
-        newChallengeList.add(NewChallengeModel("Education", R.drawable.ic_education))
-        newChallengeList.add(NewChallengeModel("Recreational", R.drawable.ic_recreational))
-        newChallengeList.add(NewChallengeModel("Music", R.drawable.ic_music))
+        val application = requireNotNull(this.activity).application
+        val dataSource = DailyChallengesDatabase.getInstance(application).dailyChallengesDAO
 
-        newChallengeList.add(NewChallengeModel("Diy", R.drawable.ic_diy))
-        newChallengeList.add(NewChallengeModel("Social", R.drawable.ic_social))
-        newChallengeList.add(NewChallengeModel("Cooking", R.drawable.ic_cooking))
+        val viewModelFactory = NewChallengeViewModelFactory(dataSource,application)
+        val challengesViewModel = ViewModelProvider(this,viewModelFactory)[NewChallengeViewModel::class.java]
 
-        newChallengeList.add(NewChallengeModel("Relaxation", R.drawable.ic_relaxation))
-        newChallengeList.add(NewChallengeModel("Charity", R.drawable.ic_charity))
-        newChallengeList.add(NewChallengeModel("Busywork", R.drawable.ic_busywork))
+        binding.newChallengeViewModel = challengesViewModel;
 
-        val challengeAdapter = NewChallengeAdapter(newChallengeList)
-        binding.newChallengeRecycleView.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = challengeAdapter
-        }
+        binding.lifecycleOwner = viewLifecycleOwner
 
+        val challengeAdapter = NewChallengeAdapter()
+
+        binding.newChallengeRecycleView.adapter = challengeAdapter
+        challengesViewModel.categories.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                challengeAdapter.submitList(it)
+            }
+        })
         return binding.root
     }
 
