@@ -3,38 +3,43 @@ package hu.inf.unideb.dailychallenges.screens.newchallenge
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import hu.inf.unideb.dailychallenges.database.DailyChallengesCategories
 import hu.inf.unideb.dailychallenges.databinding.NewchallengeListItemBinding
 
-class NewChallengeAdapter :
+class NewChallengeAdapter(private val clickListener: OnAdapterListener) :
     ListAdapter<DailyChallengesCategories, NewChallengeAdapter.ViewHolder>(NewChallengeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.i("DailyChallenges","NewChallengeAdapter - onCreateViewHolder")
+        //Log.i("DailyChallenges","NewChallengeAdapter - onCreateViewHolder")
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.i("DailyChallenges","NewChallengeAdapter - onBindViewHolder")
+        //Log.i("DailyChallenges","NewChallengeAdapter - onBindViewHolder")
         val item = getItem(position)
         holder.bind(item)
+        holder.itemView.setOnClickListener{
+            clickListener.onClick(item)
+            Log.i("DailyChallenges","NewChallengeAdapter - setOnClickListener")
+        }
     }
 
     class ViewHolder private constructor(private val bindingList: NewchallengeListItemBinding) : RecyclerView.ViewHolder(bindingList.root)
     {
         fun bind(item: DailyChallengesCategories)
         {
-            Log.i("DailyChallenges","NewChallengeAdapter - ViewHolder - bind()")
+            //Log.i("DailyChallenges","NewChallengeAdapter - ViewHolder - bind()")
             bindingList.newchallengeItemText.text = item.categoryName
             bindingList.newchallengeItemImage.setImageResource(item.categoryImage)
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                Log.i("DailyChallenges","NewChallengeAdapter - ViewHolder - from()")
+                //Log.i("DailyChallenges","NewChallengeAdapter - ViewHolder - from()")
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = NewchallengeListItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
@@ -49,7 +54,7 @@ class NewChallengeDiffCallback : DiffUtil.ItemCallback<DailyChallengesCategories
         oldItem: DailyChallengesCategories,
         newItem: DailyChallengesCategories
     ): Boolean {
-        Log.i("DailyChallenges","NewChallengeAdapter - DiffCallback - areItemsTheSame()")
+        //Log.i("DailyChallenges","NewChallengeAdapter - DiffCallback - areItemsTheSame()")
         return oldItem.categoryID == newItem.categoryID
     }
 
@@ -57,7 +62,11 @@ class NewChallengeDiffCallback : DiffUtil.ItemCallback<DailyChallengesCategories
         oldItem: DailyChallengesCategories,
         newItem: DailyChallengesCategories
     ): Boolean {
-        Log.i("DailyChallenges","NewChallengeAdapter - DiffCallback - areContentsTheSame()")
+        //Log.i("DailyChallenges","NewChallengeAdapter - DiffCallback - areContentsTheSame()")
         return oldItem == newItem
     }
+}
+
+interface OnAdapterListener {
+    fun onClick(categories: DailyChallengesCategories)
 }

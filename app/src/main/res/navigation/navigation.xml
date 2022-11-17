@@ -11,10 +11,24 @@
         tools:layout="@layout/fragment_challenges" >
         <action
             android:id="@+id/action_challengesFragmentSTART_to_newChallengeFragment2"
-            app:destination="@id/newChallengeFragment2" />
+            app:destination="@id/newChallengeFragmentID" />
     </fragment>
     <fragment
-        android:id="@+id/newChallengeFragment2"
+        android:id="@+id/newChallengeFragmentID"
         android:name="hu.inf.unideb.dailychallenges.screens.newchallenge.NewChallengeFragment"
-        android:label="NewChallengeFragment" />
+        android:label="NewChallengeFragment"
+        tools:layout="@layout/fragment_newchallenge">
+        <action
+            android:id="@+id/action_newChallengeFragmentID_to_newchallengeOptions"
+            app:destination="@id/NewChallengeOptionsID" />
+    </fragment>
+    <fragment
+        android:id="@+id/NewChallengeOptionsID"
+        android:name="hu.inf.unideb.dailychallenges.screens.newchallenge.NewChallengeOptionsFragment"
+        android:label="NewChallengeOptions"
+        tools:layout="@layout/fragment_newchallenge_options">
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+    </fragment>
 </navigation>

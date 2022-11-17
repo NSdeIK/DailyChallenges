@@ -78,6 +78,5 @@ private fun category_insert_to_database(dailyChallengesDAO: DailyChallengesDAO){
     dailyChallengesDAO.category_insert(DailyChallengesCategories(6,"Cooking",R.drawable.ic_cooking))
     dailyChallengesDAO.category_insert(DailyChallengesCategories(7,"Relaxation",R.drawable.ic_relaxation))
     dailyChallengesDAO.category_insert(DailyChallengesCategories(8,"Charity",R.drawable.ic_charity))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(9,"Busywork",R.drawable.ic_busywork))
 }
 
