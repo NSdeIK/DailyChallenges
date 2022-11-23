@@ -41,7 +41,7 @@ class ChallengesAdapter :
             oldItem: DailyChallenges,
             newItem: DailyChallenges
         ): Boolean {
-            return oldItem.challengeKey == newItem.challengeKey
+            return oldItem.challengeID == newItem.challengeID
         }
 
         override fun areContentsTheSame(

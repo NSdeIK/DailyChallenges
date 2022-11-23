@@ -13,6 +13,9 @@ interface DailyChallengesDAO {
     @Update
     suspend fun update(challenge : DailyChallenges)
 
+    @Query("SELECT EXISTS(SELECT * FROM dailychallenges_table WHERE challenge_activityText = :activityText)" )
+    fun checkExists(activityText : String): Boolean
+
     @Query("SELECT * FROM dailychallenges_table WHERE challengeID = :key")
     suspend fun get(key: Long): DailyChallenges
 

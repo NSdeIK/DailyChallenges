@@ -10,19 +10,10 @@ data class DailyChallenges(
     var challengeID: Long = 0L,
 
     @ColumnInfo(name = "challenge_type")
-    val challengeType: String?,
+    var challengeType: String?,
 
     @ColumnInfo(name = "challenge_activityText")
     val challengeActivityText: String?,
-
-    @ColumnInfo(name = "challenge_participants")
-    val challengeParticipants: String?,
-
-    @ColumnInfo(name = "challenge_price")
-    val challengePrice: Int?,
-
-    @ColumnInfo(name = "challenge_API_keyID")
-    val challengeKey: Int?,
 
     @ColumnInfo(name = "challenge_done")
     val challengeDone: Boolean = false

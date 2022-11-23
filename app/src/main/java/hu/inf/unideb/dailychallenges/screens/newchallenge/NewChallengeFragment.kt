@@ -61,7 +61,6 @@ class NewChallengeFragment : Fragment() {
                     newChallengeViewModel.onCategoriesToOptionsNavigated()
             }
         })
-
         return binding.root
     }
 
