@@ -37,7 +37,6 @@ class NewChallengeOptionsViewModel(
                 if(response.body()?.error.equals(null))
                 {
                     _response.value = response.body()?.activity.toString()
-                    Log.i("DEBUG",_response.value.toString())
                 }
                 else{
                     throw Exception()
@@ -53,10 +52,12 @@ class NewChallengeOptionsViewModel(
     }
 
     fun insert(){
+        val getImageSrc : Int = dao.getImageSrc(getCategoryName.value.toString())
         val dailyChallenges = DailyChallenges(
             challengeActivityText = response.value,
             challengeType = getCategoryName.value,
-            challengeDone = false
+            challengeDone = false,
+            challengeIcon = getImageSrc
         )
         dao.insert(dailyChallenges)
     }

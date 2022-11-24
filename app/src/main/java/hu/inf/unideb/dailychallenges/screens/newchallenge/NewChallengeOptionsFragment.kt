@@ -23,7 +23,6 @@ class NewChallengeOptionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.i("DailyChallenges", "NewChallengeOptionsFragment - onCreateView()")
         val binding: FragmentNewchallengeOptionsBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_newchallenge_options, container, false)
 
@@ -69,11 +68,10 @@ class NewChallengeOptionsFragment : Fragment() {
             if(!exists)
             {
                 viewModel.insert()
+                Toast.makeText(context,"Saved!",Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(context,"This activity already exists! Try another challenge!",Toast.LENGTH_SHORT).show()
             }
-
-            //datasource.insert(DailyChallenges(viewModel.response.value,viewModel.getCategoryName.value,false)
         }
 
         return binding.root

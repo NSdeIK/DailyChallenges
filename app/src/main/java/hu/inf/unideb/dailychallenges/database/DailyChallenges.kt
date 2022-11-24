@@ -15,7 +15,10 @@ data class DailyChallenges(
     @ColumnInfo(name = "challenge_activityText")
     val challengeActivityText: String?,
 
+    @ColumnInfo(name = "challenge_icon")
+    val challengeIcon: Int,
+
     @ColumnInfo(name = "challenge_done")
-    val challengeDone: Boolean = false
+    var challengeDone: Boolean = false
 )
 

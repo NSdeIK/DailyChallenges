@@ -1,6 +1,5 @@
-package hu.inf.unideb.dailychallenges.screens.challenges
+package hu.inf.unideb.dailychallenges.screens.completechallenges
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,15 +18,15 @@ import java.lang.ClassCastException
 private val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
 
-class ChallengesAdapter(val clickListener: ChallengesListener) :
-    ListAdapter<DataItem, RecyclerView.ViewHolder>(ChallengesDiffCallback()) {
+class CompleteChallengesAdapter :
+    ListAdapter<DataItem, RecyclerView.ViewHolder>(CompleteChallengesDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)) {
             is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
-            is DataItem.ChallengesItem -> ITEM_VIEW_TYPE_ITEM
+            is DataItem.CompleteChallengesItem -> ITEM_VIEW_TYPE_ITEM
         }
     }
 
@@ -42,8 +41,8 @@ class ChallengesAdapter(val clickListener: ChallengesListener) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is ViewHolder -> {
-                val challengeItem = getItem(position) as DataItem.ChallengesItem
-                holder.bind(challengeItem.challenge, clickListener)
+                val challengeItem = getItem(position) as DataItem.CompleteChallengesItem
+                holder.bind(challengeItem.challenge)
             }
         }
     }
@@ -52,7 +51,7 @@ class ChallengesAdapter(val clickListener: ChallengesListener) :
         adapterScope.launch {
             val items = when(list){
                 null -> listOf(DataItem.Header)
-                else -> listOf(DataItem.Header) + list.map {DataItem.ChallengesItem(it) }
+                else -> listOf(DataItem.Header) + list.map {DataItem.CompleteChallengesItem(it) }
             }
             withContext(Dispatchers.Main){
                 submitList(items)
@@ -64,7 +63,7 @@ class ChallengesAdapter(val clickListener: ChallengesListener) :
         companion object {
             fun from(parent: ViewGroup): TextViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.header, parent, false)
+                val view = layoutInflater.inflate(R.layout.header2, parent, false)
                 return TextViewHolder(view)
             }
         }
@@ -73,9 +72,8 @@ class ChallengesAdapter(val clickListener: ChallengesListener) :
     class ViewHolder private constructor(val binding: ChallengesListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: DailyChallenges, clickListener: ChallengesListener) {
+        fun bind(item: DailyChallenges) {
             binding.challenge = item
-            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -89,7 +87,7 @@ class ChallengesAdapter(val clickListener: ChallengesListener) :
     }
 }
 
-class ChallengesDiffCallback : DiffUtil.ItemCallback<DataItem>() {
+class CompleteChallengesDiffCallback : DiffUtil.ItemCallback<DataItem>() {
     override fun areItemsTheSame(
         oldItem: DataItem,
         newItem: DataItem
@@ -105,14 +103,10 @@ class ChallengesDiffCallback : DiffUtil.ItemCallback<DataItem>() {
     }
 }
 
-class ChallengesListener(val clickListener: (id: Long) -> Unit){
-    fun onClick(challenge: DailyChallenges) = clickListener(challenge.challengeID)
-}
-
 sealed class DataItem {
     abstract val id: Long
 
-    data class ChallengesItem(val challenge: DailyChallenges) : DataItem(){
+    data class CompleteChallengesItem(val challenge: DailyChallenges) : DataItem(){
         override val id = challenge.challengeID
     }
 

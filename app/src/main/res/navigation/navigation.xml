@@ -12,6 +12,12 @@
         <action
             android:id="@+id/action_challengesFragmentSTART_to_newChallengeFragment2"
             app:destination="@id/newChallengeFragmentID" />
+        <action
+            android:id="@+id/action_challengesFragmentSTART_to_challengeItemFragment"
+            app:destination="@id/challengeItemFragment" />
+        <action
+            android:id="@+id/action_challengesFragmentSTART_to_completeChallengesFragment"
+            app:destination="@id/completeChallengesFragment" />
     </fragment>
     <fragment
         android:id="@+id/newChallengeFragmentID"
@@ -31,4 +37,17 @@
             android:name="categoryName"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/challengeItemFragment"
+        android:name="hu.inf.unideb.dailychallenges.screens.challengeitem.ChallengeItemFragment"
+        android:label="ChallengeItemFragment"
+        tools:layout="@layout/fragment_challengeitem">
+        <argument
+            android:name="challengeId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/completeChallengesFragment"
+        android:name="hu.inf.unideb.dailychallenges.screens.completechallenges.CompleteChallengesFragment"
+        android:label="CompleteChallengesFragment" />
 </navigation>

@@ -12,7 +12,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [DailyChallenges::class,DailyChallengesCategories::class], version = 2, exportSchema = false)
+@Database(entities = [DailyChallenges::class,DailyChallengesCategories::class], version = 1, exportSchema = false)
 abstract class DailyChallengesDatabase : RoomDatabase() {
 
     abstract val dailyChallengesDAO: DailyChallengesDAO

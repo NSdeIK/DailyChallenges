@@ -11,58 +11,41 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/humanIcon"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:src="@android:drawable/ic_menu_myplaces"
-            app:layout_constraintEnd_toStartOf="@+id/welcomeuserTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/welcomeuserTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="168dp"
-            android:fontFamily="casual"
-            android:text="Welcome, User!"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/humanIcon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/humanIcon" />
-
-        <TextView
-            android:id="@+id/yourchallengeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your challenges"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:fontFamily="casual"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/humanIcon"
-            android:layout_marginTop="10dp"/>
+        android:layout_height="match_parent"
+        android:background="#E0F7FA">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/challenges_recycleView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/challenges_recycleView"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/completed_challenges_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/yourchallengeTextView"
-            app:layout_constraintBottom_toTopOf="@id/new_challenge_button"
-            />
+            app:layout_constraintTop_toTopOf="parent" >
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/completed_challenges_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="#81C784"
+            android:padding="20dp"
+            android:text="View completed challenges"
+            app:layout_constraintBottom_toTopOf="@+id/new_challenge_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/new_challenge_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="#2196F3"
+            android:padding="20dp"
             android:text="New challenge"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

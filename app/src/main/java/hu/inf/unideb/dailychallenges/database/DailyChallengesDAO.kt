@@ -11,16 +11,22 @@ interface DailyChallengesDAO {
     fun insert(challenge : DailyChallenges)
 
     @Update
-    suspend fun update(challenge : DailyChallenges)
+    fun update(challenge : DailyChallenges)
 
     @Query("SELECT EXISTS(SELECT * FROM dailychallenges_table WHERE challenge_activityText = :activityText)" )
     fun checkExists(activityText : String): Boolean
 
-    @Query("SELECT * FROM dailychallenges_table WHERE challengeID = :key")
-    suspend fun get(key: Long): DailyChallenges
+    @Query("SELECT category_image FROM dailychallenges_category_table WHERE category_name = :categoryName" )
+    fun getImageSrc(categoryName : String): Int
 
-    @Query("SELECT * FROM dailychallenges_table ORDER BY challengeID DESC")
+    @Query("SELECT * FROM dailychallenges_table WHERE challengeID = :key")
+    fun getChallengeId(key: Long): LiveData<DailyChallenges>
+
+    @Query("SELECT * FROM dailychallenges_table WHERE challenge_done != 1 ORDER BY challengeID DESC ")
     fun getAllChallenges(): LiveData<List<DailyChallenges>>
+
+    @Query("SELECT * FROM dailychallenges_table WHERE challenge_done == 1 ORDER BY challengeID DESC ")
+    fun getAllCompletedChallenges(): LiveData<List<DailyChallenges>>
 
     @Query("DELETE FROM dailychallenges_table")
     suspend fun clear()

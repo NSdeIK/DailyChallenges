@@ -14,5 +14,18 @@ class ChallengesViewModel(
     application: Application
 ) : ViewModel() {
     val database = dataSource
+    val challenges = dataSource.getAllChallenges()
+
+    private val _navigateToChallengeItem = MutableLiveData<Long?>()
+    val navigateToChallengeItem
+        get() = _navigateToChallengeItem
+
+    fun onChallengeClicked(id: Long) {
+        _navigateToChallengeItem.value = id
+    }
+
+    fun onChallengeItemNavigated() {
+        _navigateToChallengeItem.value = null
+    }
 
 }
