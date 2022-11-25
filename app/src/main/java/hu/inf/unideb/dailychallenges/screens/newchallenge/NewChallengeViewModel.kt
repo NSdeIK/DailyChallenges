@@ -1,10 +1,8 @@
 package hu.inf.unideb.dailychallenges.screens.newchallenge
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import hu.inf.unideb.dailychallenges.database.DailyChallengesCategories
 import hu.inf.unideb.dailychallenges.database.DailyChallengesDAO
 
 class NewChallengeViewModel(
@@ -12,8 +10,8 @@ class NewChallengeViewModel(
     application: Application
 ) : ViewModel() {
     val database = dataSource
-    val categories = dataSource.getAllCategories();
-    val app = application;
+    val categories = dataSource.getAllCategories()
+    val app = application
 
     private val _navigateToNewChallengeOptions = MutableLiveData<String?>()
 

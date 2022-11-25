@@ -1,6 +1,5 @@
 package hu.inf.unideb.dailychallenges.screens.challengeitem
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import hu.inf.unideb.dailychallenges.database.DailyChallengesDAO

@@ -6,7 +6,6 @@ import androidx.room.*
 @Dao
 interface DailyChallengesDAO {
 
-    //Main challenges DAO
     @Insert
     fun insert(challenge : DailyChallenges)
 
@@ -31,12 +30,11 @@ interface DailyChallengesDAO {
     @Query("DELETE FROM dailychallenges_table")
     suspend fun clear()
 
-    //New challenges DAO
-    @Insert
-    fun category_insert(categories: DailyChallengesCategories)
+    @Query("DELETE FROM dailychallenges_table WHERE challengeID = :key")
+    fun removeChallengeItem(key : Long)
 
-    @Query("SELECT COUNT(*) FROM dailychallenges_category_table")
-    fun category_count() : Int
+    @Insert
+    fun categoryInsert(categories: DailyChallengesCategories)
 
     @Query("SELECT * FROM dailychallenges_category_table ORDER BY categoryID ASC LIMIT 1")
     suspend fun getCategories(): DailyChallengesCategories?

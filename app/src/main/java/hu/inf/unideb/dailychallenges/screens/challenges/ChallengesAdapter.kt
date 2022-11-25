@@ -1,6 +1,5 @@
 package hu.inf.unideb.dailychallenges.screens.challenges
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.ClassCastException
 
-private val ITEM_VIEW_TYPE_HEADER = 0
-private val ITEM_VIEW_TYPE_ITEM = 1
+private const val ITEM_VIEW_TYPE_HEADER = 0
+private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class ChallengesAdapter(val clickListener: ChallengesListener) :
+class ChallengesAdapter(private val clickListener: ChallengesListener) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(ChallengesDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -35,7 +34,7 @@ class ChallengesAdapter(val clickListener: ChallengesListener) :
         return when (viewType){
             ITEM_VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
             ITEM_VIEW_TYPE_ITEM -> ViewHolder.from(parent)
-            else -> throw ClassCastException("Unknown viewType ${viewType}")
+            else -> throw ClassCastException("Unknown viewType $viewType !")
         }
     }
 

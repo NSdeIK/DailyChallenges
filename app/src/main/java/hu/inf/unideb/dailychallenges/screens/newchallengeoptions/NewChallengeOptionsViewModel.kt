@@ -1,7 +1,5 @@
-package hu.inf.unideb.dailychallenges.screens.newchallenge
+package hu.inf.unideb.dailychallenges.screens.newchallengeoptions
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,30 +8,33 @@ import hu.inf.unideb.dailychallenges.database.DailyChallenges
 import hu.inf.unideb.dailychallenges.database.DailyChallengesDAO
 import hu.inf.unideb.dailychallenges.restapi.BoredService
 import kotlinx.coroutines.launch
+import java.util.*
 
 class NewChallengeOptionsViewModel(
     dataSource: DailyChallengesDAO,
-    application: Application
+    categoryName: String
 ) : ViewModel() {
 
     private val dao = dataSource
 
-    private val _categoryName = MutableLiveData<String?>()
+    private val _categoryName = MutableLiveData<String>()
     private val _response = MutableLiveData<String>()
 
     val response: LiveData<String>
         get() = _response
 
-    val getCategoryName : MutableLiveData<String?> get() = _categoryName
+    val getCategory: LiveData<String>
+        get() = _categoryName
 
-    fun setCategoryName(categoryName: String?){
+    init {
         _categoryName.value = categoryName
+        getActivityAPI()
     }
 
-    fun getActivityAPI(type : String){
+    fun getActivityAPI(){
         viewModelScope.launch {
             try{
-                val response = BoredService.boredInterface.getActivity(type.lowercase())
+                val response = BoredService.boredInterface.getActivity(_categoryName.value!!.lowercase(Locale.getDefault()))
                 if(response.body()?.error.equals(null))
                 {
                     _response.value = response.body()?.activity.toString()
@@ -52,10 +53,10 @@ class NewChallengeOptionsViewModel(
     }
 
     fun insert(){
-        val getImageSrc : Int = dao.getImageSrc(getCategoryName.value.toString())
+        val getImageSrc : Int = dao.getImageSrc(_categoryName.value!!)
         val dailyChallenges = DailyChallenges(
             challengeActivityText = response.value,
-            challengeType = getCategoryName.value,
+            challengeType = _categoryName.value!!,
             challengeDone = false,
             challengeIcon = getImageSrc
         )

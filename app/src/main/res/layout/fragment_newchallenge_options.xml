@@ -7,13 +7,13 @@
     <data>
         <variable
             name="newChallengeOptionsViewModel"
-            type="hu.inf.unideb.dailychallenges.screens.newchallenge.NewChallengeOptionsViewModel" />
+            type="hu.inf.unideb.dailychallenges.screens.newchallengeoptions.NewChallengeOptionsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E0F7FA">
+        android:background="@color/background">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/options_category_name_card"
@@ -33,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-smallcaps"
-                android:text="CategoryName"
                 android:textAlignment="center"
                 android:textSize="24sp" />
         </androidx.cardview.widget.CardView>
@@ -75,9 +74,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:backgroundTint="#29B6F6"
+            android:backgroundTint="@color/blue"
             android:padding="20dp"
-            android:text="Generate"
+            android:text="@string/generateButton"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/save_button"
@@ -91,14 +90,13 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:padding="20dp"
-            android:backgroundTint="#C8E6C9"
-            android:text="Save"
+            android:backgroundTint="@color/green"
+            android:text="@string/SaveString"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:enabled="false"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

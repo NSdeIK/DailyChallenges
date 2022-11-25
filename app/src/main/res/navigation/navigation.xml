@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/challengesFragmentSTART"
         android:name="hu.inf.unideb.dailychallenges.screens.challenges.ChallengesFragment"
-        android:label="fragment_challenges"
-        tools:layout="@layout/fragment_challenges" >
+        android:label="Challenges"
+        tools:layout="@layout/fragment_challenges">
         <action
             android:id="@+id/action_challengesFragmentSTART_to_newChallengeFragment2"
             app:destination="@id/newChallengeFragmentID" />
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/newChallengeFragmentID"
         android:name="hu.inf.unideb.dailychallenges.screens.newchallenge.NewChallengeFragment"
-        android:label="NewChallengeFragment"
+        android:label="New challenge"
         tools:layout="@layout/fragment_newchallenge">
         <action
             android:id="@+id/action_newChallengeFragmentID_to_newchallengeOptions"
@@ -30,8 +30,8 @@
     </fragment>
     <fragment
         android:id="@+id/NewChallengeOptionsID"
-        android:name="hu.inf.unideb.dailychallenges.screens.newchallenge.NewChallengeOptionsFragment"
-        android:label="NewChallengeOptions"
+        android:name="hu.inf.unideb.dailychallenges.screens.newchallengeoptions.NewChallengeOptionsFragment"
+        android:label="Challenge"
         tools:layout="@layout/fragment_newchallenge_options">
         <argument
             android:name="categoryName"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/challengeItemFragment"
         android:name="hu.inf.unideb.dailychallenges.screens.challengeitem.ChallengeItemFragment"
-        android:label="ChallengeItemFragment"
+        android:label="Challenge"
         tools:layout="@layout/fragment_challengeitem">
         <argument
             android:name="challengeId"
@@ -49,5 +49,15 @@
     <fragment
         android:id="@+id/completeChallengesFragment"
         android:name="hu.inf.unideb.dailychallenges.screens.completechallenges.CompleteChallengesFragment"
-        android:label="CompleteChallengesFragment" />
+        android:label="Completed challenges"
+        tools:layout="@layout/fragment_completechallenges">
+        <action
+            android:id="@+id/action_completeChallengesFragment_to_challengeItemFragment"
+            app:destination="@id/challengeItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutMeFragment"
+        android:name="com.example.android.navigation.AboutMe"
+        android:label="AboutMe"
+        tools:layout="@layout/fragment_about_me"/>
 </navigation>

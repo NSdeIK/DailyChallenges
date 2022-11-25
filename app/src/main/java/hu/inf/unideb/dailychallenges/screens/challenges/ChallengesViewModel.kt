@@ -1,20 +1,25 @@
 package hu.inf.unideb.dailychallenges.screens.challenges
 
 import android.app.Application
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import hu.inf.unideb.dailychallenges.database.DailyChallengesCategories
+import hu.inf.unideb.dailychallenges.database.DailyChallenges
 import hu.inf.unideb.dailychallenges.database.DailyChallengesDAO
-import kotlinx.coroutines.launch
 
 class ChallengesViewModel(
     dataSource: DailyChallengesDAO,
     application: Application
 ) : ViewModel() {
     val database = dataSource
-    val challenges = dataSource.getAllChallenges()
+    private val challenges : LiveData<List<DailyChallenges>>
+
+    fun getChallenges() = challenges
+
+    init {
+        challenges = Transformations.map(database.getAllChallenges()){ it }
+    }
 
     private val _navigateToChallengeItem = MutableLiveData<Long?>()
     val navigateToChallengeItem

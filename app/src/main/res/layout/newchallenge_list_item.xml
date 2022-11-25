@@ -22,7 +22,8 @@
             android:layout_marginEnd="10dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="5dp"
-            app:contentPadding="25dp"
+            app:contentPaddingTop="15dp"
+            app:contentPaddingBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,18 +39,20 @@
                     android:id="@+id/newchallenge_item_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_education"
                     android:layout_margin="5dp"
+                    app:categoryIcon="@{category}"
                     />
                 <TextView
                     android:id="@+id/newchallenge_item_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="monospace"
-                    android:text="Lorum"
+                    app:categoryText="@{category}"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:hyphenationFrequency="none"
+                    android:breakStrategy="high_quality"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

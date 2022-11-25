@@ -52,7 +52,7 @@ abstract class DailyChallengesDatabase : RoomDatabase() {
 
             applicationScope.launch(Dispatchers.IO){
                 INSTANCE?.let{ database ->
-                    category_insert_to_database(database.dailyChallengesDAO)
+                    categoryInsertToDatabase(database.dailyChallengesDAO)
                 }
             }
         }
@@ -62,21 +62,21 @@ abstract class DailyChallengesDatabase : RoomDatabase() {
 
             applicationScope.launch(Dispatchers.IO){
                 INSTANCE?.let{ database ->
-                    category_insert_to_database(database.dailyChallengesDAO)
+                    categoryInsertToDatabase(database.dailyChallengesDAO)
                 }
             }
         }
     }
 }
 
-private fun category_insert_to_database(dailyChallengesDAO: DailyChallengesDAO){
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(1,"Recreational",R.drawable.ic_recreational))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(2,"Education",R.drawable.ic_education))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(3,"Music",R.drawable.ic_music))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(4,"Diy",R.drawable.ic_diy))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(5,"Social",R.drawable.ic_social))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(6,"Cooking",R.drawable.ic_cooking))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(7,"Relaxation",R.drawable.ic_relaxation))
-    dailyChallengesDAO.category_insert(DailyChallengesCategories(8,"Charity",R.drawable.ic_charity))
+private fun categoryInsertToDatabase(dailyChallengesDAO: DailyChallengesDAO){
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(1,"Recreational",R.drawable.ic_recreational))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(2,"Education",R.drawable.ic_education))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(3,"Music",R.drawable.ic_music))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(4,"Diy",R.drawable.ic_diy))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(5,"Social",R.drawable.ic_social))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(6,"Cooking",R.drawable.ic_cooking))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(7,"Relaxation",R.drawable.ic_relaxation))
+    dailyChallengesDAO.categoryInsert(DailyChallengesCategories(8,"Charity",R.drawable.ic_charity))
 }
 

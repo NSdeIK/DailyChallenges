@@ -1,13 +1,11 @@
 package hu.inf.unideb.dailychallenges.screens.newchallenge
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,9 +19,8 @@ class NewChallengeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        Log.i("DailyChallenges", "NewChallengeFragment - onCreateView()")
         val binding: FragmentNewchallengeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_newchallenge, container, false)
 
@@ -34,11 +31,10 @@ class NewChallengeFragment : Fragment() {
         val newChallengeViewModel =
             ViewModelProvider(this, viewModelFactory)[NewChallengeViewModel::class.java]
 
-        binding.newChallengeViewModel = newChallengeViewModel;
+        binding.newChallengeViewModel = newChallengeViewModel
 
         val challengeAdapter = NewChallengeAdapter(object : OnAdapterListener {
             override fun onClick(categories: DailyChallengesCategories) {
-                Log.i("DailyChallenges","NewChallengeFragment - challengeAdapter - onClick()")
                 newChallengeViewModel.onCategoryClicked(categories.categoryName)
             }
         })
@@ -47,20 +43,23 @@ class NewChallengeFragment : Fragment() {
         binding.newChallengeRecycleView.layoutManager = manager
         binding.newChallengeRecycleView.adapter = challengeAdapter
 
-        newChallengeViewModel.categories.observe(viewLifecycleOwner, Observer {
+        newChallengeViewModel.categories.observe(viewLifecycleOwner) {
             it?.let {
                 challengeAdapter.submitList(it)
             }
-        })
+        }
         binding.lifecycleOwner = viewLifecycleOwner
 
-        newChallengeViewModel.navigateToNewChallengeOptions.observe(viewLifecycleOwner, Observer { newchallenge ->
-            newchallenge?.let{
+        newChallengeViewModel.navigateToNewChallengeOptions.observe(viewLifecycleOwner) { newchallenge ->
+            newchallenge?.let {
                 this.findNavController().navigate(
-                    NewChallengeFragmentDirections.actionNewChallengeFragmentIDToNewchallengeOptions(newchallenge))
-                    newChallengeViewModel.onCategoriesToOptionsNavigated()
+                    NewChallengeFragmentDirections.actionNewChallengeFragmentIDToNewchallengeOptions(
+                        newchallenge
+                    )
+                )
+                newChallengeViewModel.onCategoriesToOptionsNavigated()
             }
-        })
+        }
         return binding.root
     }
 

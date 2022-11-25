@@ -1,14 +1,11 @@
 package hu.inf.unideb.dailychallenges.screens.challenges
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -39,16 +36,16 @@ class ChallengesFragment : Fragment() {
             challengesViewModel.onChallengeClicked(_challengeId)
         })
 
-        challengesViewModel.navigateToChallengeItem.observe(
-            viewLifecycleOwner,
-            Observer { challengeId ->
-                challengeId?.let {
-                    this.findNavController().navigate(
-                        ChallengesFragmentDirections.actionChallengesFragmentSTARTToChallengeItemFragment(challengeId)
+        challengesViewModel.navigateToChallengeItem.observe(viewLifecycleOwner) { challengeId ->
+            challengeId?.let {
+                this.findNavController().navigate(
+                    ChallengesFragmentDirections.actionChallengesFragmentSTARTToChallengeItemFragment(
+                        challengeId
                     )
-                    challengesViewModel.onChallengeItemNavigated()
-                }
-            })
+                )
+                challengesViewModel.onChallengeItemNavigated()
+            }
+        }
 
         val manager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -60,7 +57,8 @@ class ChallengesFragment : Fragment() {
         binding.challengesRecycleView.layoutManager = manager
         binding.challengesRecycleView.adapter = challengesAdapter
 
-        challengesViewModel.challenges.observe(viewLifecycleOwner) {
+        challengesViewModel.getChallenges().observe(viewLifecycleOwner) {
+            challengesAdapter.addHeaderAndSubmitList(it)
             it?.let {
                 challengesAdapter.addHeaderAndSubmitList(it)
             }

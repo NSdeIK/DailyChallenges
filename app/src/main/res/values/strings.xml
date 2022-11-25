@@ -1,5 +1,18 @@
 <resources>
-    <string name="app_name">DailyChallenges</string>
+    <string name="app_name">Daily Challenges</string>
+    <string name="imgContentDesc">icon</string>
+    <string name="RemoveString">Remove</string>
+    <string name="viewButtonString">View completed challenges</string>
+    <string name="newChallengeButtonString">New challenge</string>
+    <string name="chooseCategoryString">Which challenge do you want?</string>
+    <string name="headerString">Your challenges</string>
+    <string name="headerString2">Completed challenges</string>
+    <string name="SaveString">Save</string>
+    <string name="generateButton">Generate</string>
+    <string name="titleString">Daily Challenges</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="myName">Nagy Sándor\n 2022/2023</string>
+    <string name="schoolSubject">Mobil alkalmazásfejlesztés</string>
+    <string name="schoolName">Debreceni Egyetem Informatikai Kar</string>
 </resources>

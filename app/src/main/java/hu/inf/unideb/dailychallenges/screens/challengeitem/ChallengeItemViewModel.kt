@@ -6,8 +6,8 @@ import hu.inf.unideb.dailychallenges.database.DailyChallenges
 import hu.inf.unideb.dailychallenges.database.DailyChallengesDAO
 
 class ChallengeItemViewModel (
-    private val challengeIdKey: Long = 0L,
-    private val dataSource: DailyChallengesDAO) : ViewModel() {
+    challengeIdKey: Long = 0L,
+    dataSource: DailyChallengesDAO) : ViewModel() {
 
     val database = dataSource
 
@@ -22,6 +22,14 @@ class ChallengeItemViewModel (
                 database.update(it)
             }
         }
-
     }
+
+    fun removeItem(){
+        challenge.value.let{
+            if(it != null){
+                database.removeChallengeItem(it.challengeID)
+            }
+        }
+    }
+
 }

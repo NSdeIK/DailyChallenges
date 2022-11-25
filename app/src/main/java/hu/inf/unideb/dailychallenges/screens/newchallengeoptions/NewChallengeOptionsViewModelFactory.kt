@@ -1,4 +1,4 @@
-package hu.inf.unideb.dailychallenges.screens.newchallenge
+package hu.inf.unideb.dailychallenges.screens.newchallengeoptions
 
 import android.app.Application
 import android.util.Log
@@ -9,13 +9,12 @@ import java.lang.IllegalArgumentException
 
 class NewChallengeOptionsViewModelFactory(
     private val dataSource: DailyChallengesDAO,
-    private val application: Application
+    private val categoryName: String
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NewChallengeOptionsViewModel::class.java)) {
-            Log.i("DailyChallenges", "NewChallengeOptionsViewModelFactory - NewChallengeViewModelFactory()")
-            return NewChallengeOptionsViewModel(dataSource,application) as T
+            return NewChallengeOptionsViewModel(dataSource, categoryName) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
