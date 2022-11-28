@@ -10,7 +10,7 @@ interface DailyChallengesDAO {
     fun insert(challenge : DailyChallenges)
 
     @Update
-    fun update(challenge : DailyChallenges)
+    suspend fun update(challenge : DailyChallenges)
 
     @Query("SELECT EXISTS(SELECT * FROM dailychallenges_table WHERE challenge_activityText = :activityText)" )
     fun checkExists(activityText : String): Boolean
@@ -31,7 +31,7 @@ interface DailyChallengesDAO {
     suspend fun clear()
 
     @Query("DELETE FROM dailychallenges_table WHERE challengeID = :key")
-    fun removeChallengeItem(key : Long)
+    suspend fun removeChallengeItem(key : Long)
 
     @Insert
     fun categoryInsert(categories: DailyChallengesCategories)

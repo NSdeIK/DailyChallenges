@@ -2,8 +2,10 @@ package hu.inf.unideb.dailychallenges.screens.challengeitem
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import hu.inf.unideb.dailychallenges.database.DailyChallenges
 import hu.inf.unideb.dailychallenges.database.DailyChallengesDAO
+import kotlinx.coroutines.launch
 
 class ChallengeItemViewModel (
     challengeIdKey: Long = 0L,
@@ -15,21 +17,21 @@ class ChallengeItemViewModel (
 
     fun getChallenge() = challenge
 
+    private suspend fun remove(){
+        database.removeChallengeItem(challenge.value!!.challengeID)
+    }
+
+    private suspend fun update(){
+        database.update(challenge.value!!)
+    }
+
     fun updateChallengeItem(boolean : Boolean){
-        challenge.value.let {
-            if (it != null) {
-                it.challengeDone = boolean
-                database.update(it)
-            }
-        }
+        challenge.value!!.challengeDone = boolean
+        viewModelScope.launch { update() }
     }
 
     fun removeItem(){
-        challenge.value.let{
-            if(it != null){
-                database.removeChallengeItem(it.challengeID)
-            }
-        }
+        viewModelScope.launch { remove() }
     }
 
 }

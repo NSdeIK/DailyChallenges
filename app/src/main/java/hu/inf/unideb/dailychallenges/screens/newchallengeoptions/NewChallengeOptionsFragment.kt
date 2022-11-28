@@ -25,7 +25,7 @@ class NewChallengeOptionsFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = DailyChallengesDatabase.getInstance(application).dailyChallengesDAO
         val args = NewChallengeOptionsFragmentArgs.fromBundle(requireArguments()).categoryName
-        val viewModelFactory = NewChallengeOptionsViewModelFactory(dataSource, args)
+        val viewModelFactory = NewChallengeOptionsViewModelFactory(dataSource, args, binding)
         val viewModel =
             ViewModelProvider(this, viewModelFactory)[NewChallengeOptionsViewModel::class.java]
 
@@ -37,15 +37,12 @@ class NewChallengeOptionsFragment : Fragment() {
 
         viewModel.response.observe(viewLifecycleOwner) {
             binding.activityText.text = it.toString()
-            binding.generateButton.isEnabled = true
-            binding.saveButton.isEnabled = true
             binding.saveButton.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.green))
             binding.generateButton.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue))
         }
 
         binding.generateButton.setOnClickListener {
-            binding.generateButton.isEnabled = false
-            binding.saveButton.isEnabled = false
+            viewModel.disableButton()
             binding.generateButton.text = "Renew"
             binding.saveButton.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.lightgreen))
             binding.generateButton.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.lightblue))
@@ -61,6 +58,8 @@ class NewChallengeOptionsFragment : Fragment() {
             }else{
                 Toast.makeText(context,"This activity already exists! Try another challenge!",Toast.LENGTH_SHORT).show()
             }
+            binding.saveButton.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.lightgreen))
+            viewModel.saveDisableButton()
         }
 
         return binding.root
